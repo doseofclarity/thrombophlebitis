@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Postpartum Thrombophlebitis – DVT & Superficial | MCN Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        .transition-all { transition: all 0.3s ease; }
+        .recall-mode .reveal-text {
+            background-color: #cbd5e1;
+            color: transparent;
+            border-radius: 0.375rem;
+            padding: 0 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            box-shadow: inset 0 0 0 1px #94a3b8;
+        }
+        .recall-mode .reveal-text:hover,
+        .recall-mode .reveal-text.revealed {
+            background-color: #bfdbfe;
+            color: #1e293b;
+            box-shadow: none;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #1e40af; border-radius: 8px; }
+        .content-section { animation: fade 0.3s ease; }
+        @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .quiz-feedback-correct { background-color: #dcfce7; border-left: 4px solid #22c55e; }
+        .quiz-feedback-wrong { background-color: #fee2e2; border-left: 4px solid #ef4444; }
+        .locked-section { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { thromb: { light: '#e0e7ff', DEFAULT: '#1e40af', dark: '#1e3a8a' } } } }
+        }
+    </script>
+</head>
+<body class="bg-slate-100 h-screen flex flex-col md:flex-row font-sans text-slate-800 overflow-hidden">
+
+    <!-- Mobile Header -->
+    <div class="md:hidden bg-thromb-dark text-white p-4 flex justify-between items-center shadow-md z-30 shrink-0">
+        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none z-40">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+        <h1 class="font-bold text-lg absolute left-1/2 transform -translate-x-1/2 pointer-events-none">
+            <i class="fa-solid fa-droplet mr-2"></i> Thrombophlebitis
+        </h1>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="hidden md:flex flex-col w-full md:w-80 bg-white shadow-2xl h-full absolute md:relative z-30 transition-transform duration-300 shrink-0 border-r border-slate-200">
+        <div class="p-6 bg-gradient-to-br from-thromb-dark to-thromb text-white hidden md:block shrink-0">
+            <h1 class="font-black text-2xl tracking-wide"><i class="fa-solid fa-hand-holding-medical mr-2"></i> Postpartum Thrombophlebitis</h1>
+            <p class="text-sm text-indigo-200 mt-1 font-medium">Puerperal DVT & Superficial · Pillitteri</p>
+        </div>
+        <div class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 text-sm font-medium">
+                <li><button onclick="showSection('home')" id="btn-home" class="nav-btn w-full text-left px-6 py-3 bg-thromb-light text-thromb-dark border-r-4 border-thromb-dark transition-colors"><i class="fa-solid fa-house w-6 nav-icon"></i><i class="fa-solid fa-lock w-6 hidden"></i> Home / Start</button></li>
+                <li><button onclick="showSection('definition')" id="btn-definition" class="nav-btn w-full text-left px-6 py-3 text-slate-700 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-book-open w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Definition & Epidemiology</button></li>
+                <li><button onclick="showSection('risk')" id="btn-risk" class="nav-btn w-full text-left px-6 py-3 text-slate-700 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-chart-line w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Risk Factors & Etiology</button></li>
+                <li><button onclick="showSection('types')" id="btn-types" class="nav-btn w-full text-left px-6 py-3 text-slate-700 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-diagram-project w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Types: Superficial vs Deep vs Pelvic</button></li>
+                <li><button onclick="showSection('clinical')" id="btn-clinical" class="nav-btn w-full text-left px-6 py-3 text-slate-700 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-stethoscope w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Clinical Manifestations & Diagnosis</button></li>
+                <li><button onclick="showSection('management')" id="btn-management" class="nav-btn w-full text-left px-6 py-3 text-slate-700 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-capsules w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Medical & Nursing Management</button></li>
+                <li><button onclick="showSection('complications')" id="btn-complications" class="nav-btn w-full text-left px-6 py-3 text-slate-700 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-skull-crossbones w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Complications & Prevention</button></li>
+                <li><button onclick="showSection('mnemonics')" id="btn-mnemonics" class="nav-btn w-full text-left px-6 py-3 text-slate-700 hover:bg-slate-50 transition-colors border-t border-slate-200 mt-2 locked-section"><i class="fa-solid fa-brain w-6 text-thromb nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Mnemonics & Summary</button></li>
+                <li><button onclick="showSection('final_quiz_sec')" id="btn-final_quiz_sec" class="nav-btn w-full text-left px-6 py-3 text-slate-700 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-graduation-cap w-6 text-amber-500 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Final 50‑Item Exam</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="flex-1 h-full overflow-y-auto bg-slate-100 relative w-full">
+        <div class="fixed top-16 md:top-4 right-4 md:right-8 z-40 flex items-center bg-white/90 backdrop-blur px-4 py-3 rounded-full shadow-lg border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors" onclick="toggleRecallMode()">
+            <span class="mr-3 text-sm font-bold text-slate-700 hidden md:inline"><i class="fa-solid fa-brain text-thromb mr-1"></i> Active Recall</span>
+            <button id="recall-toggle" class="w-12 h-6 bg-slate-300 rounded-full relative transition-colors duration-300 focus:outline-none shadow-inner pointer-events-none">
+                <div id="recall-knob" class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform duration-300 shadow"></div>
+            </button>
+        </div>
+
+        <div class="p-4 md:p-8 max-w-6xl mx-auto pb-32">
+            <!-- HOME SECTION -->
+            <section id="home" class="content-section flex flex-col items-center justify-center min-h-[80vh] text-center block">
+                <div class="bg-gradient-to-br from-slate-800 to-thromb-dark text-white rounded-3xl shadow-2xl p-10 md:p-16 w-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-10 -mr-10 text-white opacity-5 pointer-events-none"><i class="fa-solid fa-droplet text-[20rem]"></i></div>
+                    <div class="relative z-10">
+                        <div class="bg-white/10 backdrop-blur-sm inline-block p-4 rounded-full text-indigo-300 mb-6 shadow-sm border border-white/20">
+                            <i class="fa-solid fa-hand-holding-medical text-5xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-300 mb-2 uppercase tracking-widest">Maternal & Child Health Nursing</h3>
+                        <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight drop-shadow-md">Postpartum Thrombophlebitis</h1>
+                        <div class="bg-white/10 backdrop-blur inline-block px-6 py-3 rounded-full mb-10 border border-white/20">
+                            <p class="text-lg text-white font-medium">DVT · Superficial · Pelvic Thrombophlebitis | <strong>Adele Pillitteri, 7e</strong></p>
+                        </div>
+                        <button onclick="unlockFirstSection()" class="bg-slate-600 hover:bg-slate-500 text-white font-black py-4 px-10 rounded-full shadow-xl transition-transform hover:scale-105 text-lg flex items-center mx-auto focus:outline-none">
+                            Begin Module <i class="fa-solid fa-arrow-right ml-3"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. DEFINITION & EPIDEMIOLOGY -->
+            <section id="definition" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-thromb pb-3"><i class="fa-solid fa-book-open text-thromb mr-4"></i> Definition & Epidemiology</h2>
+                    <p><strong>Thrombophlebitis</strong> – inflammation of a vein associated with thrombus (clot) formation. In the puerperium, pregnancy‑induced hypercoagulability dramatically increases risk. Includes deep vein thrombosis (DVT), superficial vein thrombosis (SVT), and septic pelvic thrombophlebitis.</p>
+                    <div class="grid md:grid-cols-2 gap-5 mt-4">
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong>📊 Incidence</strong><br><span class="reveal-text">Pregnancy increases DVT risk 5- to 10‑fold. Incidence of postpartum DVT: 0.5–1 per 1000 deliveries. Cesarean section doubles/triples risk. Most DVTs occur in the left leg.</span></div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong>⏰ Timing</strong><br><span class="reveal-text">Highest risk in the first 6 weeks postpartum, peak at 1‑3 weeks after delivery. Antepartum risk is also elevated but greatest postnatally.</span></div>
+                    </div>
+                    <div class="bg-thromb-light p-3 rounded-lg mt-4"><i class="fa-regular fa-lightbulb"></i> <strong>Key concept:</strong> Virchow's triad – venous stasis, endothelial injury, hypercoagulability – all present in pregnancy/puerperium.</div>
+                    <button onclick="openQuiz('definition')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 2. RISK FACTORS & ETIOLOGY -->
+            <section id="risk" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-thromb pb-3"><i class="fa-solid fa-chart-line text-thromb mr-4"></i> Risk Factors & Etiology</h2>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div><strong>⚠️ Major Risk Factors</strong><br><span class="reveal-text">Cesarean section (especially emergent), obesity, age >35, multiparity, prolonged bed rest/immobility, preeclampsia, postpartum hemorrhage, infection, dehydration, varicose veins, smoking, prior thrombosis, thrombophilia (Factor V Leiden, prothrombin mutation, protein C/S deficiency).</span></div>
+                        <div><strong>🧬 Virchow’s Triad in Pregnancy</strong><br><span class="reveal-text">Hypercoagulability (increased fibrinogen, Factors VII‑X, decreased protein S), venous stasis (enlarged uterus compresses iliac veins, left common iliac vein), endothelial injury (vaginal/cesarean delivery).</span></div>
+                    </div>
+                    <div class="bg-amber-50 p-3 rounded-lg mt-4"><strong>📊 Laterality:</strong> <span class="reveal-text">Left leg DVTs are 2‑3 times more common due to compression of left common iliac vein by right iliac artery (May‑Thurner anatomy).</span></div>
+                    <button onclick="openQuiz('risk')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 3. TYPES: SUPERFICIAL, DEEP, PELVIC -->
+            <section id="types" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-thromb pb-3"><i class="fa-solid fa-diagram-project text-thromb mr-4"></i> Types: Superficial vs Deep vs Pelvic</h2>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-xl"><strong>🔹 Superficial Vein Thrombosis (SVT)</strong><br><span class="reveal-text">Affects saphenous or superficial leg veins; usually due to varicose veins or IV trauma. Palpable, tender cord, erythema. Low risk of PE, but can extend to deep system.</span></div>
+                        <div class="bg-red-50 p-4 rounded-xl"><strong>🔸 Deep Vein Thrombosis (DVT)</strong><br><span class="reveal-text">Most common in iliofemoral or popliteal veins. Unilateral leg swelling, pain, warmth, Homan’s sign (often unreliable). High risk of pulmonary embolism (PE).</span></div>
+                        <div class="bg-purple-50 p-4 rounded-xl"><strong>🩸 Septic Pelvic Thrombophlebitis</strong><br><span class="reveal-text">Rare complication of postpartum endometritis. Persistent fever despite antibiotics, unilateral lower quadrant pain, palpable tender cord (ovarian vein). Treatment: anticoagulation + antibiotics.</span></div>
+                    </div>
+                    <div class="bg-slate-100 p-3 rounded-lg mt-4"><i class="fa-regular fa-flask"></i> <strong>Phlegmasia cerulea dolens:</strong> <span class="reveal-text">Massive iliofemoral DVT causing severe edema, cyanosis, compartment syndrome – limb‑threatening emergency.</span></div>
+                    <button onclick="openQuiz('types')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 4. CLINICAL MANIFESTATIONS & DIAGNOSIS -->
+            <section id="clinical" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-thromb pb-3"><i class="fa-solid fa-stethoscope text-thromb mr-4"></i> Clinical Manifestations & Diagnosis</h2>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>DVT symptoms:</strong> <span class="reveal-text">Unilateral leg pain, swelling (edema), warmth, erythema, tenderness over deep veins, positive Homan’s sign (pain on dorsiflexion) – unreliable.</span></li>
+                        <li><strong>Well’s score:</strong> <span class="reveal-text">Clinical prediction rule for DVT probability.</span></li>
+                        <li><strong>Diagnostic tests:</strong> <span class="reveal-text">Compression ultrasound (Doppler) is first‑line (high sensitivity for proximal DVT). D‑dimer (less specific postpartum due to physiologic elevation). Venography for equivocal cases.</span></li>
+                        <li><strong>Pelvic thrombophlebitis:</strong> <span class="reveal-text">Fever >38°C for >72h despite antibiotics, unilateral lower quadrant pain, CT/MRI showing thrombosed ovarian vein.</span></li>
+                        <li><strong>Superficial thrombophlebitis:</strong> <span class="reveal-text">Palpable tender “cord”, localized redness, no significant edema.</span></li>
+                    </ul>
+                    <div class="bg-red-100 p-3 rounded-lg mt-4"><strong>🚨 Caution:</strong> <span class="reveal-text">Homan’s sign is neither sensitive nor specific; do NOT forcibly dorsiflex if DVT suspected (may dislodge clot).</span></div>
+                    <button onclick="openQuiz('clinical')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 5. MEDICAL & NURSING MANAGEMENT -->
+            <section id="management" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-thromb pb-3"><i class="fa-solid fa-capsules text-thromb mr-4"></i> Medical & Nursing Management</h2>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Anticoagulation (acute DVT/PE):</strong> <span class="reveal-text">Low‑molecular‑weight heparin (LMWH) – enoxaparin 1 mg/kg BID or once daily; unfractionated heparin IV (monitor aPTT). Warfarin (Coumadin) is avoided in pregnancy but may be used postpartum (safe for breastfeeding); overlapping with heparin until INR 2‑3.</span></li>
+                        <li><strong>Direct oral anticoagulants (DOACs):</strong> <span class="reveal-text">Rivaroxaban, apixaban – not recommended during pregnancy but may be used postpartum (limited data).</span></li>
+                        <li><strong>Supportive care:</strong> <span class="reveal-text">Bed rest with leg elevation, warm compresses (for superficial), analgesics, compression stockings (after acute phase).</span></li>
+                        <li><strong>Nursing interventions:</strong> <span class="reveal-text">Monitor for bleeding (gums, lochia, injection sites). Instruct patient not to massage leg. Maintain IV access, monitor vitals, and assess for signs of PE (sudden dyspnea, chest pain, hemoptysis, tachycardia).</span></li>
+                        <li><strong>Septic pelvic thrombophlebitis:</strong> <span class="reveal-text">Antibiotics + heparin (therapeutic anticoagulation).</span></li>
+                        <li><strong>Superficial thrombophlebitis:</strong> <span class="reveal-text">NSAIDs, warm compresses, compression stockings; anticoagulation rarely needed unless extension.</span></li>
+                    </ul>
+                    <div class="bg-green-50 p-3 rounded-lg mt-4"><i class="fa-regular fa-heart"></i> <strong>Breastfeeding:</strong> <span class="reveal-text">LMWH, warfarin, and DOACs are considered compatible (warfarin not secreted into milk).</span></div>
+                    <button onclick="openQuiz('management')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 6. COMPLICATIONS & PREVENTION -->
+            <section id="complications" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-thromb pb-3"><i class="fa-solid fa-skull-crossbones text-thromb mr-4"></i> Complications & Prevention</h2>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div><strong>⚠️ Complications</strong><br><span class="reveal-text">Pulmonary embolism (PE) – most feared; signs: sudden dyspnea, chest pain, hemoptysis, tachycardia, hypotension. Post‑thrombotic syndrome (chronic leg swelling, pain, skin changes, ulcers). Recurrent DVT. Phlegmasia cerulea dolens (limb ischemia).</span></div>
+                        <div><strong>🛡️ Prevention (Pharmacologic)</strong><br><span class="reveal-text">Routine thromboprophylaxis for high‑risk women (cesarean + additional risk factors). LMWH (enoxaparin 40 mg daily) starting 6‑12 hours after delivery. Mechanical prophylaxis (sequential compression devices, elastic stockings) for all C‑sections.</span></div>
+                        <div><strong>🚶 Non‑pharmacologic prevention</strong><br><span class="reveal-text">Early ambulation, hydration, leg exercises, avoid prolonged bed rest, avoid constrictive clothing, stop smoking.</span></div>
+                        <div><strong>🔍 Risk assessment</strong><br><span class="reveal-text">Use Royal College of Obstetricians (RCOG) thromboprophylaxis risk assessment tool.</span></div>
+                    </div>
+                    <div class="bg-red-100 p-3 rounded-lg mt-4"><strong>🚨 PE emergency:</strong> <span class="reveal-text">Call code, high‑flow oxygen, IV access, prepare for thrombolysis or embolectomy if hemodynamically unstable.</span></div>
+                    <button onclick="openQuiz('complications')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Next</button>
+                </div>
+            </section>
+
+            <!-- 7. MNEMONICS & SUMMARY -->
+            <section id="mnemonics" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-4 border-b-2 border-thromb pb-3"><i class="fa-solid fa-brain text-thromb mr-4"></i> Mnemonics & Summary</h2>
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="bg-indigo-50 p-4 rounded-xl"><strong>📌 Virchow’s Triad – “S.E.I.”</strong><br><span class="reveal-text">Stasis, Endothelial injury, Hypercoagulability.</span></div>
+                        <div class="bg-indigo-50 p-4 rounded-xl"><strong>🩸 DVT Signs “S.W.A.P.”</strong><br><span class="reveal-text">Swelling, Warmth, Area tenderness, Pain (unilateral).</span></div>
+                        <div class="bg-indigo-50 p-4 rounded-xl"><strong>⚠️ PE Symptoms “C.T.H.U.M.P.”</strong><br><span class="reveal-text">Chest pain, Tachypnea, Hemoptysis, Uneasy (anxiety), Murmur (tachycardia), Pulmonary hypertension signs.</span></div>
+                        <div class="bg-indigo-50 p-4 rounded-xl"><strong>💊 Anticoagulation in pregnancy/lactation</strong><br><span class="reveal-text">LMWH is safe and first‑line; warfarin safe postpartum (not in pregnancy); avoid DOACs in pregnancy but may use postpartum.</span></div>
+                        <div class="bg-indigo-50 p-4 rounded-xl"><strong>📋 Risk factors “C.O.A.L.S.”</strong><br><span class="reveal-text">Cesarean section, Obesity, Age >35, Large baby/ multiparity, Smoking/prior thrombosis.</span></div>
+                        <div class="bg-indigo-50 p-4 rounded-xl"><strong>🛌 Prevention “M.E.D.S.”</strong><br><span class="reveal-text">Mobilize early, Exercise legs, Drugs (LMWH), Sequential compression devices.</span></div>
+                    </div>
+                    <button onclick="openQuiz('mnemonics')" class="mt-6 w-full bg-slate-800 text-white font-black py-3 rounded-xl">Take Quiz → Unlock Final Exam</button>
+                </div>
+            </section>
+
+            <!-- FINAL EXAM SECTION -->
+            <section id="final_quiz_sec" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center min-h-[60vh] flex flex-col justify-center items-center">
+                    <i class="fa-solid fa-graduation-cap text-8xl text-amber-500 mb-6"></i>
+                    <h2 class="text-4xl font-black text-slate-800 mb-4">Final 50‑Item Exam: Thrombophlebitis</h2>
+                    <p class="text-lg text-slate-600 mb-8 max-w-2xl">Covers definitions, risk factors, types, clinical signs, diagnosis, management, complications, prevention, and mnemonics. Score ≥75% to pass.</p>
+                    <button onclick="openQuiz('final_quiz')" class="w-full max-w-md bg-slate-800 text-white font-black py-4 rounded-xl shadow-md text-xl">Start Final Exam</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- QUIZ MODAL -->
+    <div id="quiz-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl p-6 md:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeQuiz()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            <h2 id="quiz-title" class="text-3xl font-black text-slate-800 mb-2"></h2>
+            <div id="quiz-questions-container" class="space-y-4 mt-4"></div>
+            <button id="quiz-submit-btn" onclick="submitQuiz()" class="mt-8 w-full bg-thromb text-white font-bold py-4 rounded-xl shadow-lg">Submit Answers</button>
+            <div id="quiz-result-container" class="hidden mt-6 p-4 rounded-xl bg-slate-100"></div>
+        </div>
+    </div>
+
+    <script>
+        let unlockedSections = ['home'];
+        // QUIZZES (10 questions each)
+        const quizzes = {
+            definition: { title: "Definition & Epidemiology", next: "risk", questions: [
+                { q: "Thrombophlebitis is defined as:", options: ["Inflammation of vein with thrombus formation", "Arterial occlusion", "Lymphangitis", "Varicose veins"], ans: 0 },
+                { q: "Pregnancy increases the risk of venous thromboembolism by:", options: ["2‑fold", "5‑ to 10‑fold", "20‑fold", "No increase"], ans: 1 },
+                { q: "Postpartum DVT most commonly occurs in which leg?", options: ["Right leg", "Left leg", "Both equally", "Depends on delivery"], ans: 1 },
+                { q: "What is the peak time for postpartum DVT?", options: ["First 24 hours", "1‑3 weeks postpartum", "4‑6 weeks", "After 6 weeks"], ans: 1 },
+                { q: "The three components of Virchow's triad are:", options: ["Stasis, endothelial injury, hypercoagulability", "Pain, swelling, redness", "Fever, hypotension, tachycardia", "Thrombocytopenia, bleeding, infection"], ans: 0 },
+                { q: "Incidence of postpartum DVT is approximately:", options: ["1 in 1000", "1 in 5000", "1 in 10,000", "1 in 500"], ans: 0 },
+                { q: "Which factor contributes to hypercoagulability in pregnancy?", options: ["Increased fibrinogen and factors VII‑X", "Decreased platelet count", "Increased PT/PTT", "Decreased protein S"], ans: 0 },
+                { q: "The risk of DVT after cesarean section compared to vaginal delivery is:", options: ["Lower", "Doubled/tripled", "Same", "Unchanged"], ans: 1 },
+                { q: "Which of the following is NOT part of Virchow's triad?", options: ["Venous stasis", "Hypercoagulability", "Endothelial injury", "Inherited thrombophilia"], ans: 3 },
+                { q: "Postpartum DVT risk is highest in the first:", options: ["6 weeks", "12 weeks", "3 months", "6 months"], ans: 0 }
+            ]},
+            risk: { title: "Risk Factors & Etiology", next: "types", questions: [
+                { q: "Which of the following is a major risk factor for postpartum DVT?", options: ["Cesarean section", "Spontaneous vaginal delivery", "Prolonged lactation", "Multiparity only"], ans: 0 },
+                { q: "The left leg is more prone to DVT due to:", options: ["Compression of left iliac vein by right iliac artery (May‑Thurner)", "Shorter left leg", "More varicose veins", "Higher venous pressure on left"], ans: 0 },
+                { q: "Which thrombophilia is most common in Caucasians?", options: ["Factor V Leiden", "Prothrombin G20210A", "Protein C deficiency", "Antithrombin deficiency"], ans: 0 },
+                { q: "Obesity (BMI >30) increases DVT risk by:", options: ["2‑fold", "5‑fold", "10‑fold", "No increase"], ans: 0 },
+                { q: "Which of the following is NOT a risk factor for postpartum thrombophlebitis?", options: ["Age >35", "Early ambulation", "Preeclampsia", "Smoking"], ans: 1 },
+                { q: "Venous stasis in pregnancy is caused by:", options: ["Uterine compression of iliac veins", "Increased blood volume", "Elevated fibrinogen", "Decreased venous tone"], ans: 0 },
+                { q: "Endothelial injury during delivery can occur from:", options: ["Forceps or vacuum", "Cesarean incision", "Vaginal lacerations", "All of the above"], ans: 3 },
+                { q: "A history of prior DVT increases recurrence risk during pregnancy to approximately:", options: ["2‑5%", "10‑15%", "25%", "50%"], ans: 0 },
+                { q: "Dehydration is a risk factor because it:", options: ["Increases blood viscosity", "Reduces blood volume", "Increases clotting factor concentration", "All of the above"], ans: 3 },
+                { q: "Which maternal condition independently increases thrombotic risk?", options: ["Preeclampsia", "Gestational diabetes", "Hyperemesis", "UTI"], ans: 0 }
+            ]},
+            types: { title: "Types: Superficial, Deep, Pelvic", next: "clinical", questions: [
+                { q: "Superficial vein thrombosis typically involves:", options: ["Saphenous vein", "Femoral vein", "Iliac vein", "Popliteal vein"], ans: 0 },
+                { q: "Which type of thrombophlebitis is most likely to cause pulmonary embolism?", options: ["Superficial", "Deep vein thrombosis (proximal)", "Pelvic septic thrombophlebitis", "Superficial of varicose vein"], ans: 1 },
+                { q: "Septic pelvic thrombophlebitis is characterized by:", options: ["Persistent fever despite antibiotics, unilateral pelvic pain", "Asymptomatic", "Massive leg swelling", "Hemoptysis"], ans: 0 },
+                { q: "The classic finding in superficial thrombophlebitis is:", options: ["Palpable tender cord along vein", "Massive edema", "Homan’s sign positive", "Cyanosis of foot"], ans: 0 },
+                { q: "Ovarian vein thrombosis is a form of:", options: ["Septic pelvic thrombophlebitis", "Superficial thrombophlebitis", "Arterial thrombosis", "Superficial venous thrombosis"], ans: 0 },
+                { q: "Which of the following is NOT a type of postpartum thrombophlebitis?", options: ["Superficial", "DVT", "Septic pelvic", "Cerebral venous sinus thrombosis (but less common)"], ans: 3 },
+                { q: "Phlegmasia cerulea dolens is a complication of:", options: ["Massive iliofemoral DVT", "Superficial thrombophlebitis", "Septic pelvic thrombophlebitis", "Arterial embolism"], ans: 0 },
+                { q: "The most common site of DVT in pregnancy is:", options: ["Left iliofemoral vein", "Right calf veins", "Superficial saphenous", "Pelvic veins"], ans: 0 },
+                { q: "Septic pelvic thrombophlebitis is usually associated with:", options: ["Postpartum endometritis", "C-section wound infection", "Mastitis", "UTI"], ans: 0 },
+                { q: "Superficial thrombophlebitis in a pregnant woman often occurs in association with:", options: ["Varicose veins", "Trauma", "Infection", "Dehydration"], ans: 0 }
+            ]},
+            clinical: { title: "Clinical Manifestations & Diagnosis", next: "management", questions: [
+                { q: "The most common symptom of DVT is:", options: ["Unilateral leg swelling and pain", "Bilateral edema", "Calf pain only", "Asymptomatic"], ans: 0 },
+                { q: "Homan’s sign refers to:", options: ["Pain on dorsiflexion of foot", "Calf warmth", "Pedal edema", "Tenderness over popliteal vein"], ans: 0 },
+                { q: "The first‑line imaging test for suspected DVT is:", options: ["Compression ultrasound (Doppler)", "D‑dimer", "Venography", "CT venogram"], ans: 0 },
+                { q: "D‑dimer is less reliable in postpartum women because:", options: ["It is physiologically elevated after delivery", "It is always normal", "It is not valid", "It requires special assay"], ans: 0 },
+                { q: "A patient with suspected DVT and high clinical probability should:", options: ["Start anticoagulation while awaiting diagnostic testing", "Wait for D‑dimer result", "Apply compression stockings only", "Send home with pain medication"], ans: 0 },
+                { q: "Septic pelvic thrombophlebitis is diagnosed with:", options: ["CT or MRI showing thrombosed ovarian vein", "Ultrasound of legs", "D‑dimer", "Chest X‑ray"], ans: 0 },
+                { q: "Which of the following is a common sign of DVT?", options: ["Unilateral pitting edema", "Bilateral edema", "Cyanosis of toes only", "Absent pedal pulses"], ans: 0 },
+                { q: "A patient reports sudden onset of dyspnea and pleuritic chest pain. This suggests:", options: ["Pulmonary embolism", "Atelectasis", "Pneumonia", "Costochondritis"], ans: 0 },
+                { q: "The Wells score is used to:", options: ["Predict probability of DVT", "Diagnose PE", "Assess bleeding risk", "Monitor anticoagulation"], ans: 0 },
+                { q: "Superficial thrombophlebitis typically presents with:", options: ["Localized redness, heat, and tender cord", "Massive swelling", "Positive Homan’s sign", "Hemoptysis"], ans: 0 }
+            ]},
+            management: { title: "Medical & Nursing Management", next: "complications", questions: [
+                { q: "First‑line anticoagulant for DVT in the postpartum period is:", options: ["Low‑molecular‑weight heparin (LMWH)", "Warfarin", "Aspirin", "Unfractionated heparin only"], ans: 0 },
+                { q: "The therapeutic goal for DVT treatment is:", options: ["Prevent extension and PE", "Dissolve existing clot completely", "Relieve pain only", "Bed rest for 2 weeks"], ans: 0 },
+                { q: "A patient on LMWH for DVT should be monitored for:", options: ["Bleeding (gums, lochia, injection sites)", "Hypotension", "Bradycardia", "Hyperglycemia"], ans: 0 },
+                { q: "Warfarin is considered safe during breastfeeding because:", options: ["It is not secreted into breast milk", "It is secreted but inactive", "It is secreted but well tolerated", "It is contraindicated"], ans: 0 },
+                { q: "Nursing care for a patient with DVT includes all EXCEPT:", options: ["Leg massage to reduce pain", "Leg elevation, warm compresses for superficial", "Monitor for bleeding", "Administer LMWH as ordered"], ans: 0 },
+                { q: "The recommended LMWH dose for therapeutic anticoagulation is:", options: ["Enoxaparin 1 mg/kg BID", "Enoxaparin 40 mg daily", "Enoxaparin 80 mg daily", "Unfractionated heparin 5000 U BID"], ans: 0 },
+                { q: "For a patient with superficial thrombophlebitis, the nurse should:", options: ["Apply warm compresses, give NSAIDs", "Start warfarin", "Order duplex ultrasound stat", "Immobilize leg"], ans: 0 },
+                { q: "Septic pelvic thrombophlebitis is treated with:", options: ["Antibiotics + therapeutic anticoagulation", "Antibiotics alone", "Surgical ligation", "Bed rest only"], ans: 0 },
+                { q: "When administering LMWH subcutaneously, the nurse should:", options: ["Use a small gauge needle, do not rub site", "Massage the site after injection", "Inject into deltoid muscle", "Aspirate before injection"], ans: 0 },
+                { q: "Maternal anticoagulation does NOT require discontinuing breastfeeding because:", options: ["LMWH and warfarin are safe", "Breastfeeding is contraindicated with DVT", "Anticoagulation requires formula feeding", "Only heparin is safe"], ans: 0 }
+            ]},
+            complications: { title: "Complications & Prevention", next: "mnemonics", questions: [
+                { q: "The most serious complication of DVT is:", options: ["Pulmonary embolism", "Post‑thrombotic syndrome", "Recurrent DVT", "Phlegmasia cerulea dolens"], ans: 0 },
+                { q: "Signs of pulmonary embolism include:", options: ["Sudden dyspnea, chest pain, hemoptysis", "Headache, blurred vision", "Epigastric pain, nausea", "Low back pain"], ans: 0 },
+                { q: "Pharmacologic thromboprophylaxis after cesarean section is indicated for women with:", options: ["Additional risk factors (obesity, age >35, prior VTE)", "All women", "None", "Only with known thrombophilia"], ans: 0 },
+                { q: "Mechanical prophylaxis (compression stockings) should be applied:", options: ["In all C‑section patients", "Only if anticoagulation is contraindicated", "Never", "Only for patients with varicose veins"], ans: 0 },
+                { q: "Post‑thrombotic syndrome manifests as:", options: ["Chronic leg swelling, pain, skin ulcers", "Hemoptysis", "Pleuritic chest pain", "Pulmonary hypertension"], ans: 0 },
+                { q: "Early ambulation after delivery helps prevent DVT by:", options: ["Reducing venous stasis", "Increasing platelet count", "Decreasing coagulation factors", "Increasing hydration"], ans: 0 },
+                { q: "A patient with suspected PE is hypotensive. The nurse should prepare for:", options: ["Thrombolytics or embolectomy", "IV fluids only", "Discharge home", "Antibiotics"], ans: 0 },
+                { q: "Which of the following is a contraindication to LMWH thromboprophylaxis?", options: ["Active bleeding", "Obesity", "Previous DVT", "Cesarean section"], ans: 0 },
+                { q: "Hydration is important for DVT prevention because:", options: ["Dehydration increases blood viscosity and clot risk", "It reduces swelling", "It prevents hypotension", "It increases urine output"], ans: 0 },
+                { q: "The risk of DVT recurrence after an episode is approximately:", options: ["5‑10% per year", "1%", "25%", "0.5%"], ans: 0 }
+            ]},
+            mnemonics: { title: "Mnemonics & Summary", next: "final_quiz_sec", questions: [
+                { q: "The mnemonic for Virchow's triad is:", options: ["S.E.I.", "S.W.A.P.", "C.O.A.L.S.", "M.E.D.S."], ans: 0 },
+                { q: "In S.E.I., 'S' stands for:", options: ["Stasis", "Swelling", "Skin changes", "Surgery"], ans: 0 },
+                { q: "The mnemonic for DVT signs is:", options: ["S.W.A.P.", "S.E.I.", "C.O.A.L.S.", "M.E.D.S."], ans: 0 },
+                { q: "In S.W.A.P., 'W' stands for:", options: ["Warmth", "Weight gain", "Wound", "Weakness"], ans: 0 },
+                { q: "The mnemonic for risk factors is:", options: ["C.O.A.L.S.", "S.E.I.", "S.W.A.P.", "M.E.D.S."], ans: 0 },
+                { q: "In C.O.A.L.S., 'C' stands for:", options: ["Cesarean section", "Clotting", "Cough", "Calves"], ans: 0 },
+                { q: "The mnemonic for prevention is:", options: ["M.E.D.S.", "C.O.A.L.S.", "S.E.I.", "S.W.A.P."], ans: 0 },
+                { q: "In M.E.D.S., 'D' stands for:", options: ["Drugs (LMWH)", "DVT", "Drainage", "Diet"], ans: 0 },
+                { q: "Which mnemonic helps recall PE symptoms?", options: ["C.T.H.U.M.P.", "S.E.I.", "M.E.D.S.", "C.O.A.L.S."], ans: 0 },
+                { q: "In C.T.H.U.M.P., 'H' stands for:", options: ["Hemoptysis", "Headache", "Hypertension", "Heartburn"], ans: 0 }
+            ]}
+        };
+        // Build final 50-item exam
+        let finalQ = [];
+        for(let sec of ['definition','risk','types','clinical','management','complications','mnemonics']) {
+            finalQ.push(...quizzes[sec].questions.slice(0,7));
+        }
+        while(finalQ.length < 50) finalQ.push({ q: "The most important immediate action for suspected pulmonary embolism in a postpartum patient is:", options: ["Administer oxygen, call for help, monitor vitals", "Start heparin", "Perform chest X‑ray", "Give aspirin"], ans: 0 });
+        quizzes.final_quiz = { title: "Final 50‑Item Exam: Postpartum Thrombophlebitis", next: null, questions: finalQ };
+
+        let currentQuiz = null;
+
+        function unlockFirstSection() { if(!unlockedSections.includes('definition')) { unlockedSections.push('definition'); updateSidebarUI(); } showSection('definition'); }
+        function showSection(sectionId) {
+            if (!unlockedSections.includes(sectionId) && sectionId !== 'home') { alert("Complete the Active Recall Quiz at the bottom of the previous section to unlock."); return; }
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(sectionId)?.classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-thromb-light','text-thromb-dark','border-r-4','border-thromb-dark'));
+            const activeBtn = document.getElementById('btn-'+sectionId);
+            if(activeBtn) activeBtn.classList.add('bg-thromb-light','text-thromb-dark','border-r-4','border-thromb-dark');
+            if(window.innerWidth < 768) document.getElementById('sidebar').classList.add('hidden');
+        }
+        function updateSidebarUI() {
+            const sections = ['home','definition','risk','types','clinical','management','complications','mnemonics','final_quiz_sec'];
+            sections.forEach(sec => {
+                const btn = document.getElementById('btn-'+sec);
+                if(!btn) return;
+                const lock = btn.querySelector('.fa-lock'), icon = btn.querySelector('.nav-icon');
+                if(unlockedSections.includes(sec) || sec==='home') { btn.classList.remove('locked-section'); if(lock) lock.classList.add('hidden'); if(icon) icon.classList.remove('hidden'); }
+                else { btn.classList.add('locked-section'); if(lock) lock.classList.remove('hidden'); if(icon) icon.classList.add('hidden'); }
+            });
+        }
+        function openQuiz(sectionId) { currentQuiz = sectionId; const qd = quizzes[sectionId]; if(!qd) return; document.getElementById('quiz-title').innerHTML = qd.title; const container = document.getElementById('quiz-questions-container'); container.innerHTML = ''; qd.questions.forEach((q, idx) => { let html = `<div class="bg-slate-50 p-4 rounded-xl mb-4"><p class="font-bold mb-3">${idx+1}. ${q.q}</p><div class="space-y-2">`; q.options.forEach((opt,oi) => { html += `<label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="q${idx}" value="${oi}" class="form-radio text-thromb"><span>${opt}</span></label>`; }); html += `</div><div class="feedback-${idx} text-sm mt-2 hidden"></div></div>`; container.innerHTML += html; }); document.getElementById('quiz-submit-btn').classList.remove('hidden'); document.getElementById('quiz-result-container').classList.add('hidden'); document.getElementById('quiz-modal').classList.remove('hidden'); }
+        function closeQuiz() { document.getElementById('quiz-modal').classList.add('hidden'); }
+        function submitQuiz() {
+            const qd = quizzes[currentQuiz];
+            if(!qd) return;
+            let score = 0;
+            for(let i=0; i<qd.questions.length; i++) {
+                const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                if(sel && parseInt(sel.value)===qd.questions[i].ans) score++;
+                const fbDiv = document.querySelector(`.feedback-${i}`);
+                if(fbDiv){
+                    fbDiv.classList.remove('hidden');
+                    const correctTxt = qd.questions[i].options[qd.questions[i].ans];
+                    if(sel && parseInt(sel.value)===qd.questions[i].ans) { fbDiv.innerHTML='<span class="text-green-700">✓ Correct</span>'; fbDiv.parentElement?.classList.add('quiz-feedback-correct'); }
+                    else { const selectedTxt = sel? qd.questions[i].options[parseInt(sel.value)]:"No answer"; fbDiv.innerHTML=`<span class="text-red-700">✗ Incorrect. Correct: ${correctTxt}. You answered: ${selectedTxt}</span>`; fbDiv.parentElement?.classList.add('quiz-feedback-wrong'); }
+                }
+            }
+            let percent = (score/qd.questions.length)*100;
+            let resultDiv = document.getElementById('quiz-result-container');
+            document.getElementById('quiz-submit-btn').classList.add('hidden');
+            resultDiv.classList.remove('hidden');
+            if(percent>=75){
+                if(currentQuiz==='final_quiz'){ resultDiv.innerHTML=`<div class="text-green-600 text-4xl text-center">🎉 Excellent! Score ${score}/${qd.questions.length} (${percent}%)<br>You mastered Postpartum Thrombophlebitis</div><button onclick="closeQuiz()" class="mt-4 bg-thromb text-white px-6 py-2 rounded-xl">Close</button>`; return; }
+                if(quizzes[currentQuiz].next && !unlockedSections.includes(quizzes[currentQuiz].next)) unlockedSections.push(quizzes[currentQuiz].next);
+                if(quizzes[currentQuiz].next === 'mnemonics' && !unlockedSections.includes('final_quiz_sec')) unlockedSections.push('final_quiz_sec');
+                updateSidebarUI();
+                resultDiv.innerHTML=`<div class="text-green-600 text-3xl text-center">✅ Passed! (${score}/${qd.questions.length})</div><button onclick="closeQuiz(); showSection('${quizzes[currentQuiz].next}')" class="mt-4 bg-green-600 text-white px-6 py-2 rounded-xl">Unlock Next Section</button>`;
+            } else { resultDiv.innerHTML=`<div class="text-red-600 text-3xl text-center">❌ Failed: ${score}/${qd.questions.length} (${percent}%)<br>Need 75%</div><button onclick="openQuiz('${currentQuiz}')" class="mt-4 bg-slate-600 text-white px-6 py-2 rounded-xl">Try Again</button>`; }
+        }
+        function toggleRecallMode() { const active = !document.body.classList.contains('recall-mode'); const toggle=document.getElementById('recall-toggle'),knob=document.getElementById('recall-knob'); if(active){ document.body.classList.add('recall-mode'); toggle.classList.add('bg-thromb-dark'); knob.classList.add('translate-x-6'); } else { document.body.classList.remove('recall-mode'); toggle.classList.remove('bg-thromb-dark'); knob.classList.remove('translate-x-6'); } }
+        function toggleMobileMenu() { const s=document.getElementById('sidebar'); if(s.classList.contains('hidden')) s.classList.remove('hidden','flex','absolute','h-full','z-50'); else s.classList.add('hidden'); }
+        document.addEventListener('DOMContentLoaded', () => { updateSidebarUI(); document.querySelectorAll('.reveal-text').forEach(el => el.addEventListener('click', function(){ if(document.body.classList.contains('recall-mode')) this.classList.toggle('revealed'); })); });
+    </script>
+</body>
+</html>
